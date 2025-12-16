@@ -1,24 +1,18 @@
 # https://uconncalendar.lib.uconn.edu/reserve/GroupStudyRooms
 
 
+# Adjusting in order to follow the UCONN IT policies on automation and web scraping.
 
-class Reservationist():
+
+
+class Reservationist:
 
 
     def main(self): pass
 
-    # Takes Students schedule for each day
-    # Takes Students login
-    # Checks for the Student's schedule
 
 
-
-
-    def check_date(self):
-        """ Checks current date on startup of program to see if the new study rooms are posted, runs the rest of the program after this requirement is met"""
-        pass
-
-    def student_info(self):
+    def student_schedule(self):
         """ Takes students information for making reservations """ 
         pass
 
