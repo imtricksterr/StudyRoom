@@ -3,12 +3,15 @@
 
 # Adjusting in order to follow the UCONN IT policies on automation and web scraping.
 
-
+from playwright.sync_api, import sync_playwright
 
 class Reservationist:
 
 
-    def main(self): pass
+    def main(self):
+       """ Main function to run the reservation process """
+        with sync_playwright() as p:
+            browser = p.chromium.launch()
 
 
 
