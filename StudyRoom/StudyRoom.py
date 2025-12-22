@@ -2,21 +2,22 @@
 
 
 # Adjusting in order to follow the UCONN IT policies on automation and web scraping.
+# MOVED TO PRE_OOP IN ORDER TO FIGURE OUT THE FRAMEWORK 
 
 from playwright.sync_api import sync_playwright
 
 class Reservationist:
 
-    playwright = sync_playwright().start()
-
     def main(self):
         """ Main function to run the reservation process """
-        
-        with sync_playwright() as p:
+        # here i am going to be calling the functions chronologically to help with simplicity
+
+
+        """ with sync_playwright() as p: # i just took this prompt from the website
             self.student_schedule()
             browser = p.chromium.launch()
             page = browser.new_page()
-            page.goto("https://uconncalendar.lib.uconn.edu/reserve/GroupStudyRooms")
+            page.goto("https://uconncalendar.lib.uconn.edu/reserve/GroupStudyRooms") """
 
 
 
