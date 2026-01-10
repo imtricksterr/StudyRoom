@@ -26,8 +26,36 @@ with sync_playwright() as p:
     page.pause()
 
 # Step 3: Read availability table
-    available_slots = page.locator("div.fc-event:not(.fc-event-unavailable)")
+    events = page.locator("a.fc-event") # changed this so i know the gaps?
+    slots = []
     # pass this to method that compares available slots to student schedule
+
+    for i in range(events.count()):
+        e = events.nth(i)
+
+        classes = e.get_attribute("class") or ""
+        available = "fc-event-unavailable" not in classes
+
+        slots.append({
+
+            "room": e.get_attribute("data-resource-id"),
+            "start": e.get_attribute("data-start"),
+            "end": e.get_attribute("data-end"),
+            "available": available,
+            "element": e
+
+        })
+
+
+    """  
+    <a class = "fc-event"
+    data-start = "2026-01-09T15:00:00"
+    data-end = "2026-01-09T15:30:00"
+    
+    """
+
+    
+
 
 # Step 4: Check if availability table matches user defined schedule at all; anticipating the logic for this will be a pain
     # if user schedule matches an open study room:
