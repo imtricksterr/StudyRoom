@@ -14,12 +14,27 @@ from collections import defaultdict
     # rooms = 1103A, 1103B, 1104A, 1104B, 1104C, 1104D, 1104E, 1104F, 1105A, 1105B, 1106A, 1106B, 1128 
 
 # if size > 6:
-    # rooms = 2200, 2149
+    # rooms = 3182, 2200, 
 
 # else: 
-    # rooms = 2100, 2149, 2177, 4100, 4129, 4134A, 4134B, 4177, 4182A, 4182B, 4200, B141A, B141B, B144A, B144B, B149A, B149B
+    # rooms = 2100, 2149, 2177, 3166A, 3166B, 4100, 4129, 4134A, 4134B, 4177, 4182A, 4182B, 4200, B141A, B141B, B144A, B144B, B149A, B149B
 
 
+""" rooms = [
+    {
+        "room": "1103A",
+        "capacity": 5,
+        "slots":[True, True, True, False, True]
+
+
+
+    },
+
+
+
+]
+
+"""
 
 class Reservationist:
 
@@ -43,7 +58,7 @@ def get_student_schedule():
         "day": input("Day: "),
         "start": input("Enter desired start time: "),
         "end": input("Enter desired end time:"),
-        "size": input("Enter desired room size:")
+        "group_size": input("Enter desired room size:")
 
     }
 
@@ -52,7 +67,7 @@ with sync_playwright() as p:
     browser = p.chromium.launch(headless=False)
 
 # Step 2: Open Reservations Page
-    page = browser.new_page
+    page = browser.new_page()
     page.goto("https://uconncalendar.lib.uconn.edu/reserve/GroupStudyRooms")
     page.pause()
 
@@ -133,7 +148,7 @@ with sync_playwright() as p:
 
 # Step 4: Check if availability table matches user defined schedule at all; anticipating the logic for this will be a pain
 def run_covers_request(run, desired_start, desired_end):
-    run[0]["start"] <= desired_start and run[-1]["end"] >= desired_end
+    return (run[0]["start"] <= desired_start and run[-1]["end"] >= desired_end)
 
 
 
@@ -187,9 +202,16 @@ def user_select_option(options):
             if 0 <= idx < len(options):
                 return options[idx]
 
+        print("Invalid selection. Please try again.")
+
+
+
 # Step 7: proceed with booking process
     # booking script until authentication section
 
+def initiate_booking(selected_run):
+    starting_slot = selected_run["run"][0]
+    starting_slot["element"].click()
 
 
 # Step 8: Let user log in manually (pausing our Playwright session until done)
