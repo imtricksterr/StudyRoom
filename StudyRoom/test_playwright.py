@@ -8,3 +8,6 @@ with sync_playwright() as p:
     print(events.count())
     available = page.locator("a.fc-event:not(.fc-event-unavailable)")
     print(available.count())
+    room_labels = page.locator("span.fc-cell-text")
+    count = room_labels.count()
+    print(count)
