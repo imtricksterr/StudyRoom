@@ -62,7 +62,7 @@ def get_student_schedule():
 
     }
 
-# Step 1: Start Chromium session in headed mode (allows us to see what is occurring)
+# Step 1: Start Chromium session in headed mode (allows for live feedback)
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=False)
 
@@ -77,16 +77,16 @@ with sync_playwright() as p:
     # pass this to method that compares available slots to student schedule
 
     for i in range(events.count()):
-        e = events.nth(i)
+        e = events.nth(i) 
 
         classes = e.get_attribute("class") or ""
-        available = "fc-event-unavailable" not in classes
+        available = "fc-event-unavailable" not in classes # pulling availability slots while checking for unavailable class
 
         slots.append({
 
-            "room": e.get_attribute("data-resource-id"),
-            "start": e.get_attribute("data-start"),
-            "end": e.get_attribute("data-end"),
+            "room": e.get_attribute("data-resource-id"), # room number
+            "start": e.get_attribute("data-start"), # start time
+            "end": e.get_attribute("data-end"), # end time
             "available": available,
             "element": e
 
@@ -96,7 +96,7 @@ with sync_playwright() as p:
     rooms = defaultdict(list)
 
     for slot in slots:
-        rooms[slot["room"]].append(slot)
+        rooms[slot["room"]].append(slot) # this gets us the structure of rooms with their chained available slots
 
 
     for room_slots in rooms.values():
@@ -104,7 +104,7 @@ with sync_playwright() as p:
 
 
 
-    # Step 4: Grouping available slots (might have to do the graph)
+    # Step 4: Grouping available slots
     def group_available_runs(slots):
         runs = []
         current = []
@@ -146,7 +146,7 @@ with sync_playwright() as p:
     
 
 
-# Step 4: Check if availability table matches user defined schedule at all; anticipating the logic for this will be a pain
+# Step 4: Check if availability table matches user defined schedule at all
 def run_covers_request(run, desired_start, desired_end):
     return (run[0]["start"] <= desired_start and run[-1]["end"] >= desired_end)
 
@@ -154,8 +154,6 @@ def run_covers_request(run, desired_start, desired_end):
 
 # Step 5: Return available study room sessions that work for the student
     # return study rooms available to user
-
-    # have user pick one study room and send that to booking method; repetitive, but am not confident atm that i can figure out how to do multiple bookings in one session
 
 
 def find_matching_runs(rooms, desired_start, desired_end):
@@ -190,7 +188,6 @@ def display_options(options):
         )
 
 # Step 6: Let student pick specific study room
-    # have user pick one study room and send that to booking method; repetitive, but am not confident atm that i can figure out how to do multiple bookings in one session
 
 def user_select_option(options):
 
